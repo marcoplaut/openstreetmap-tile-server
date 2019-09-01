@@ -141,7 +141,9 @@ RUN ln -sf /proc/1/fd/1 /var/log/apache2/access.log \
 COPY postgresql.custom.conf.tmpl /etc/postgresql/10/main/
 RUN chown -R postgres:postgres /var/lib/postgresql \
   && chown postgres:postgres /etc/postgresql/10/main/postgresql.custom.conf.tmpl \
-  && echo "\ninclude 'postgresql.custom.conf'" >> /etc/postgresql/10/main/postgresql.conf
+  && echo "\ninclude 'postgresql.custom.conf'" >> /etc/postgresql/10/main/postgresql.conf \
+  && echo "host    all             all             192.168.178.0/24          trust" >> /etc/postgresql/10/main/pg_hba.conf \
+  && echo "host    all             all             109.26.3.17/32            trust" >> /etc/postgresql/10/main/pg_hba.conf
 
 # copy update scripts
 COPY openstreetmap-tiles-update-expire /usr/bin/
